@@ -16,22 +16,16 @@ typedef struct {
     int distancia; // Distancia en metros
 } Conexion;
 
-typedef struct {
-    Interseccion intersecciones[MAX_INTERSECCIONES];
-    Conexion conexiones[MAX_INTERSECCIONES][MAX_INTERSECCIONES];
-    int numIntersecciones;
-} GrafoDirigido;
-
 int matriz[V][V]; // Matriz de adyacencia para representar el grafo dirigido
 int distancia[V]; // Almacena la distancia más corta desde el vértice de origen
 int visitado[V]; // Indica si un vértice ha sido visitado o no
 
 // Función para encontrar el vértice con la distancia mínima
-int minDistancia(int distancia[], int visitado[]) {
+int minDistancia(int distancia[], bool visitado[]) {
     int min = INT_MAX, min_indice;
 
     for (int v = 0; v < V; v++) {
-        if (visitado[v] == 0 && distancia[v] <= min) {
+        if (visitado[v] == false && distancia[v] <= min) {
             min = distancia[v];
             min_indice = v;
         }
@@ -39,36 +33,51 @@ int minDistancia(int distancia[], int visitado[]) {
     return min_indice;
 }
 
-// Función para imprimir la solución (ruta más corta desde el vértice de origen)
-void imprimirSolucion(int distancia[], int origen) {
-    printf("Intersección \t Distancia desde el origen\n");
-    for (int i = 0; i < V; i++) {
-        printf("%d \t\t %d\n", i, distancia[i]);
+// Función para imprimir la ruta más corta desde el vértice de origen hasta el vértice de destino
+void imprimirRuta(int padre[], int destino) {
+    if (padre[destino] == -1) {
+        printf("%d", destino);
+        return;
     }
+    imprimirRuta(padre, padre[destino]);
+    printf("%d", destino);
 }
 
-// Algoritmo de Dijkstra para encontrar la ruta más corta
-void dijkstra(int matriz[V][V], int origen) {
+// Algoritmo de Dijkstra para encontrar la ruta más corta entre dos vértices
+void dijkstra(int origen, int destino) {
+    int distancia[V];
+    bool visitado[V];
+    int padre[V];
+
     for (int i = 0; i < V; i++) {
         distancia[i] = INT_MAX;
-        visitado[i] = 0;
+        visitado[i] = false;
+        padre[i] = -1;
     }
 
     distancia[origen] = 0;
 
     for (int count = 0; count < V - 1; count++) {
         int u = minDistancia(distancia, visitado);
-        visitado[u] = 1;
+        visitado[u] = true;
 
         for (int v = 0; v < V; v++) {
             if (!visitado[v] && matriz[u][v] && distancia[u] != INT_MAX &&
                 distancia[u] + matriz[u][v] < distancia[v]) {
                 distancia[v] = distancia[u] + matriz[u][v];
+                padre[v] = u;
             }
         }
     }
 
-    imprimirSolucion(distancia, origen);
+    if (distancia[destino] == INT_MAX) {
+        printf("No hay ruta entre el origen y el destino\n");
+        return;
+    }
+
+    printf("Ruta mas corta entre %d y %d: ", origen, destino);
+    imprimirRuta(padre, destino);
+    printf("\nDistancia: %d metros\n", (distancia[destino]*100));
 }
 
 int obtenerNumeroInterseccion(Interseccion intersecciones[], int numIntersecciones, char nombre[]) {
@@ -81,7 +90,6 @@ int obtenerNumeroInterseccion(Interseccion intersecciones[], int numInterseccion
 }
 
 int main() {
-    GrafoDirigido grafo;
     char entrada[50];
     char origen[50];
     char destino[50];
@@ -114,7 +122,6 @@ int main() {
     }
 
     fclose(archivo);
-    int matriz [112][112];
     for (int j = 0; j < 111; j++){
         if(j==0){
             matriz[j][j+1]=1;
@@ -214,11 +221,14 @@ int main() {
             matriz[j][96]=1;
         }
     }
-    printf("Ingrese tres lugares y sus números separados por espacios entre comillas (Ejemplo: \"Orompello 100\" \"Rengo 400\" \"Paicavi 600\"): ");
+    printf("Ingrese tres lugares y sus numeros separados por espacios entre comillas (Ejemplo: \"Orompello 100\" \"Rengo 400\" \"Paicavi 600\"): ");
     fgets(entrada, sizeof(entrada), stdin);
     sscanf(entrada, "\"%s %d\" \"%s %d\" \"%s %d\"", origen, &numOrigen, destino, &numDestino, paso, &numPaso);
 
-    dijkstra(matriz, 0);
+    int origens = 0; // Vertice de origen (ajusta según tu necesidad)
+    int destinos = 10; // Vertice de destino (ajusta según tu necesidad)
+
+    dijkstra(origens, destinos);
 
     return 0;
 }
