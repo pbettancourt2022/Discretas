@@ -3,6 +3,7 @@
 #include <string.h>
 #include <limits.h>
 #include <stdbool.h>
+#include <math.h>
 
 #define MAX_INTERSECCIONES 112
 #define INF 9999999 // Valor infinito para representar distancias desconocidas
@@ -36,11 +37,11 @@ int minDistancia(int distancia[], bool visitado[]) {
 // Función para imprimir la ruta más corta desde el vértice de origen hasta el vértice de destino
 void imprimirRuta(int padre[], int destino) {
     if (padre[destino] == -1) {
-        printf("%d", destino);
+        printf("%d ", destino);
         return;
     }
     imprimirRuta(padre, padre[destino]);
-    printf("%d", destino);
+    printf("%d ", destino);
 }
 
 // Algoritmo de Dijkstra para encontrar la ruta más corta entre dos vértices
@@ -122,7 +123,7 @@ int main() {
     }
 
     fclose(archivo);
-    for (int j = 0; j < 111; j++){
+    for (int j = 0; j < 112; j++){
         if(j==0){
             matriz[j][j+1]=1;
         }
@@ -225,8 +226,8 @@ int main() {
     fgets(entrada, sizeof(entrada), stdin);
     sscanf(entrada, "\"%s %d\" \"%s %d\" \"%s %d\"", origen, &numOrigen, destino, &numDestino, paso, &numPaso);
 
-    int origens = 0; // Vertice de origen (ajusta según tu necesidad)
-    int destinos = 10; // Vertice de destino (ajusta según tu necesidad)
+    int origens = 111; // Vertice de origen (ajusta según tu necesidad)
+    int destinos = 0; // Vertice de destino (ajusta según tu necesidad)
 
     dijkstra(origens, destinos);
 
