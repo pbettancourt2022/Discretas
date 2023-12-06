@@ -8,6 +8,9 @@
 #define MAX_INTERSECCIONES 112
 #define INF 9999999 // Valor infinito para representar distancias desconocidas
 #define V 112
+#define NUM_CALLES 22
+#define MAX_NOMBRE_CALLE 50
+
 typedef struct {
     char nombre[50];
     int numero;
@@ -16,6 +19,12 @@ typedef struct {
 typedef struct {
     int distancia; // Distancia en metros
 } Conexion;
+
+// Estructura para representar una calle con su nombre y número asociado
+typedef struct {
+    char nombre[MAX_NOMBRE_CALLE];
+    int numero;
+} Calle;
 
 int matriz[V][V]; // Matriz de adyacencia para representar el grafo dirigido
 int distancia[V]; // Almacena la distancia más corta desde el vértice de origen
@@ -90,12 +99,74 @@ int obtenerNumeroInterseccion(Interseccion intersecciones[], int numInterseccion
     return -1; // Si no se encuentra la intersección
 }
 
+// Función para asignar números a calles basadas en sus nombres
+int obtenerNumeroCalle(const char nombreCalle[], Calle calles[], int numCalles) {
+    for (int i = 0; i < numCalles; ++i) {
+        if (strcmp(nombreCalle, calles[i].nombre) == 0) {
+            return calles[i].numero;
+        }
+    }
+    return -1; // Si el nombre de la calle no se encuentra
+}
+
+int obtenerNumeroVertice(int numcallegrafo, int numlugar){
+    for(int i=0; i<=21;i++){
+        
+        if(numcallegrafo==i){
+            
+            if (i<=13){
+                
+                for(int j=100;j<700;j=j+100){
+                    
+                    if(((numlugar>=j)&&(numlugar<(j+100)))){
+                        int a=((112+i)-(14*(j/100)));
+                        return a;
+                    }
+                }
+            }
+            else if (i>13){
+                for(int j=0;j<1300;j=j+100){
+                    if(((numlugar>=j)&&(numlugar<(j+100)))){
+                        int a=((14*(i-14))+(j/100));
+                        return a;
+                    }
+                }
+            }
+            
+            
+        }
+    }
+    return -1;
+}
+
 int main() {
     char entrada[50];
     char origen[50];
     char destino[50];
     char paso[50];
     int numOrigen, numDestino, numPaso;
+
+    FILE *archivoCalles = fopen("Calles.txt", "r");
+    if (archivoCalles == NULL) {
+        perror("Error al abrir el archivo de calles");
+        return EXIT_FAILURE;
+    }
+
+    // Crear un array de estructuras Calle con nombres y números
+    Calle calles[NUM_CALLES];
+
+    // Leer los nombres de las calles del archivo y asignar números a las calles
+    for (int i = 0; i < NUM_CALLES; ++i) {
+        if (fscanf(archivoCalles, "%s", calles[i].nombre) != 1) {
+            printf("Error al leer el archivo de calles.\n");
+            fclose(archivoCalles);
+            return EXIT_FAILURE;
+        }
+        calles[i].numero = i; // Asignar el número correspondiente a la calle
+    }
+
+    fclose(archivoCalles);
+
     FILE *archivo = fopen("intersecciones.txt", "r");
     if (archivo == NULL) {
         perror("Error al abrir el archivo de intersecciones");
@@ -222,14 +293,48 @@ int main() {
             matriz[j][96]=1;
         }
     }
+
+    // Mostrar las intersecciones con sus nombres y números asociados
+    for (int i = 0; i < numIntersecciones; i++) {
+        printf("%s = %d\n", intersecciones[i].nombre, intersecciones[i].numero);
+    }
+    
     printf("Ingrese tres lugares y sus numeros separados por espacios entre comillas (Ejemplo: \"Orompello 100\" \"Rengo 400\" \"Paicavi 600\"): ");
     fgets(entrada, sizeof(entrada), stdin);
     sscanf(entrada, "\"%s %d\" \"%s %d\" \"%s %d\"", origen, &numOrigen, destino, &numDestino, paso, &numPaso);
 
-    int origens = 111; // Vertice de origen (ajusta según tu necesidad)
-    int destinos = 0; // Vertice de destino (ajusta según tu necesidad)
+    // Obtener el número de la calle basado en el nombre
+    int calleorigen = obtenerNumeroCalle(origen, calles, NUM_CALLES);
+    if (calleorigen == -1) {
+        printf("Nombre de calle no válido origen.\n");
+        return EXIT_FAILURE;
+    }
+    int calledestino = obtenerNumeroCalle(destino, calles, NUM_CALLES);
+    if (calledestino == -1) {
+        printf("Nombre de calle no válido destino.\n");
+        return EXIT_FAILURE;
+    }
+    
+    printf("hola %s", paso);
+    
+    //if(paso!=NULL){
+       // int callepaso = obtenerNumeroCalle(paso, calles, NUM_CALLES);
+       // if (callepaso == -1) {
+       //     printf("Nombre de calle no válido paso.\n");
+      //      return EXIT_FAILURE;
+       // }
+       // int verticeDestino= obtenerNumeroVertice(callepaso, numPaso);
+    //}
+    
+    
+    // Calcular el vértice correspondiente
+    int verticeOrigen = obtenerNumeroVertice(calleorigen, numOrigen);
+    int verticeDestino= obtenerNumeroVertice(calledestino, numDestino);
+    
+    //int orige = 111; // Vertice de origen (ajusta según tu necesidad)
+    //int destinos = 0; // Vertice de destino (ajusta según tu necesidad)
 
-    dijkstra(origens, destinos);
+    dijkstra(verticeOrigen, verticeDestino);
 
     return 0;
 }
