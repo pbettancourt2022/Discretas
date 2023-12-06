@@ -75,14 +75,13 @@ void dijkstra(Interseccion intersecciones[], int origen, int destino) {
             if (!visitado[v] && matriz[u][v] && distancia[u] != INT_MAX && distancia[u] + matriz[u][v] < distancia[v]) {
                 distancia[v] = distancia[u] + matriz[u][v];
                 padre[v] = u;
-                if ((u == 111 && v == 96) || (u == 96 && v == 81) || (u == 81 && v == 66)) {
-                    contador++;
+                if(matriz[u][v] == matriz[111][96] || matriz[u][v] == matriz[96][81] || matriz[u][v] == matriz[81][66]){
+                    contador ++;
+                    printf("%d", contador);
                 }
             }
         }
     }
-    printf("%d", contador);
-
 
     if (distancia[destino] == INT_MAX) {
         printf("No hay ruta entre el origen y el destino\n");

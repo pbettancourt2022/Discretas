@@ -64,7 +64,7 @@ Caupolican/OHiggins
 Anibal_Pinto/OHiggins
 Colo_Colo/OHiggins
 Castellon/OHiggins
-Tucapel/OHiggins/Pedro Aguirre Cerda
+Tucapel/OHiggins/Pedro_Aguirre_Cerda
 Orompello/OHiggins
 Ongolmo/OHiggins
 Paicavi/OHiggins
@@ -79,7 +79,7 @@ Anibal_Pinto/San_Martin
 Colo_Colo/San_Martin
 Castellon/San_Martin
 Tucapel/San_Martin
-Orompello/San_Martin/Pedro Aguirre Cerda
+Orompello/San_Martin/Pedro_Aguirre_Cerda
 Ongolmo/San_Martin
 Paicavi/San_Martin
 Arturo_Prat/Cochrane
@@ -94,7 +94,7 @@ Colo_Colo/Cochrane
 Castellon/Cochrane
 Tucapel/Cochrane
 Orompello/Cochrane
-Ongolmo/Cochrane/Pedro Aguirre Cerda
+Ongolmo/Cochrane/Pedro_Aguirre_Cerda
 Paicavi/Cochrane
 Arturo_Prat/Chacabuco
 Serrano/Chacabuco
@@ -109,4 +109,4 @@ Castellon/Chacabuco
 Tucapel/Chacabuco
 Orompello/Chacabuco
 Ongolmo/Chacabuco
-Paicavi/Chacabuco/Pedro Aguirre Cerda
+Paicavi/Chacabuco/Pedro_Aguirre_Cerda
