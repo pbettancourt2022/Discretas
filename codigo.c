@@ -6,10 +6,9 @@
 #include <math.h>
 
 #define MAX_INTERSECCIONES 112
-#define INF 9999999 // Valor infinito para representar distancias desconocidas
 #define V 112
-#define NUM_CALLES 22
-#define MAX_NOMBRE_CALLE 50
+#define NUM_CALLES 23
+#define MAX_NOMBRE_CALLE 100
 
 typedef struct {
     char nombre[50];
@@ -50,7 +49,7 @@ void imprimirRuta(Interseccion intersecciones[], int padre[], int destino) {
         return;
     }
     imprimirRuta(intersecciones, padre, padre[destino]);
-    printf("%s ", intersecciones[destino].nombre);
+    printf(" --> %s ", intersecciones[destino].nombre);
 }
 
 // Algoritmo de Dijkstra para encontrar la ruta más corta entre dos vértices
@@ -81,7 +80,6 @@ void dijkstra(Interseccion intersecciones[], int origen, int destino) {
             }
         }
     }
-    printf("%d", contador);
 
 
     if (distancia[destino] == INT_MAX) {
@@ -115,13 +113,21 @@ int obtenerNumeroCalle(const char nombreCalle[], Calle calles[], int numCalles) 
 }
 
 int obtenerNumeroVertice(int numcallegrafo, int numlugar){
-    for(int i=0; i<=21;i++){
+    for(int i=0; i<=22;i++){
         
         if(numcallegrafo==i){
-            
-            if (i<=13){
+            if(i==22){
+                for(int j=100;j<=400;j=j+100){
+                    
+                    if(((numlugar>=j)&&(numlugar<(j+100)))){
+                        int a=((111)-(15*((j-100)/100)));
+                        return a;
+                    }
+                }
+            }
+            else if (i<=13){
                 
-                for(int j=100;j<700;j=j+100){
+                for(int j=100;j<800;j=j+100){
                     
                     if(((numlugar>=j)&&(numlugar<(j+100)))){
                         int a=((112+i)-(14*(j/100)));
@@ -298,16 +304,11 @@ int main() {
             matriz[j][96]=1;
         }
     }
-
-    // Mostrar las intersecciones con sus nombres y números asociados
-    for (int i = 0; i < numIntersecciones; i++) {
-        printf("%s = %d\n", intersecciones[i].nombre, intersecciones[i].numero);
-    }
     
-    printf("Ingrese tres lugares y sus numeros separados por espacios entre comillas (Ejemplo: \"Orompello 100\" \"Rengo 400\" \"Paicavi 600\"): ");
+    printf("Ingrese lugar de origen y de destino, (es opcional colocar un lugar de paso, en el ejemplo es \"Paicavi 600\") y sus numeros separados por espacios entre comillas (Ejemplo: \"Orompello 100\" \"Rengo 400\" \"Paicavi 600\"): ");
     fgets(entrada, sizeof(entrada), stdin);
     sscanf(entrada, "\"%s %d\" \"%s %d\" \"%s %d\"", origen, &numOrigen, destino, &numDestino, paso, &numPaso);
-
+    printf("\n");
     // Obtener el número de la calle basado en el nombre
     int calleorigen = obtenerNumeroCalle(origen, calles, NUM_CALLES);
     if (calleorigen == -1) {
@@ -324,17 +325,14 @@ int main() {
     int verticeOrigen = obtenerNumeroVertice(calleorigen, numOrigen);
     int verticeDestino= obtenerNumeroVertice(calledestino, numDestino);
 
-    if(paso[0]!=NULL){
-        int callepaso = obtenerNumeroCalle(paso, calles, NUM_CALLES);
-        if (callepaso == -1) {
-            printf("Nombre de calle no valido paso.\n");
-            return EXIT_FAILURE;
-        }
+     int callepaso = obtenerNumeroCalle(paso, calles, NUM_CALLES);
+    if (callepaso != -1) {
         int verticePaso= obtenerNumeroVertice(callepaso, numPaso);
         dijkstra(intersecciones, verticeOrigen, verticePaso);
         dijkstra(intersecciones, verticePaso, verticeDestino);
     }
     else{
+        printf("%d, %d", verticeOrigen, verticeDestino);
         dijkstra(intersecciones, verticeOrigen, verticeDestino);
     }
     
