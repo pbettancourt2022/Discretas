@@ -11,7 +11,7 @@ Castellon/Los_Carrera
 Tucapel/Los_Carrera
 Orompello/Los_Carrera
 Ongolmo/Los_Carrera
-Picavi/Los_Carrera
+Paicavi/Los_Carrera
 Arturo_Prat/Maipu
 Serrano/Maipu
 Salas/Maipu
@@ -25,7 +25,7 @@ Castellon/Maipu
 Tucapel/Maipu
 Orompello/Maipu
 Ongolmo/Maipu
-Picavi/Maipu
+Paicavi/Maipu
 Arturo_Prat/Freire
 Serrano/Freire
 Salas/Freire
@@ -39,7 +39,7 @@ Castellon/Freire
 Tucapel/Freire
 Orompello/Freire
 Ongolmo/Freire
-Picavi/Freire
+Paicavi/Freire
 Arturo_Prat/Barros_Arana
 Serrano/Barros_Arana
 Salas/Barros_Arana
@@ -53,7 +53,7 @@ Castellon/Barros_Arana
 Tucapel/Barros_Arana
 Orompello/Barros_Arana
 Ongolmo/Barros_Arana
-Picavi/Barros_Arana
+Paicavi/Barros_Arana
 Arturo_Prat/OHiggins
 Serrano/OHiggins
 Salas/OHiggins
@@ -67,7 +67,7 @@ Castellon/OHiggins
 Tucapel/OHiggins/Pedro Aguirre Cerda
 Orompello/OHiggins
 Ongolmo/OHiggins
-Picavi/OHiggins
+Paicavi/OHiggins
 Arturo_Prat/San_Martin
 Serrano/San_Martin
 Salas/San_Martin
@@ -81,7 +81,7 @@ Castellon/San_Martin
 Tucapel/San_Martin
 Orompello/San_Martin/Pedro Aguirre Cerda
 Ongolmo/San_Martin
-Picavi/San_Martin
+Paicavi/San_Martin
 Arturo_Prat/Cochrane
 Serrano/Cochrane
 Salas/Cochrane
@@ -95,7 +95,7 @@ Castellon/Cochrane
 Tucapel/Cochrane
 Orompello/Cochrane
 Ongolmo/Cochrane/Pedro Aguirre Cerda
-Picavi/Cochrane
+Paicavi/Cochrane
 Arturo_Prat/Chacabuco
 Serrano/Chacabuco
 Salas/Chacabuco
@@ -109,4 +109,4 @@ Castellon/Chacabuco
 Tucapel/Chacabuco
 Orompello/Chacabuco
 Ongolmo/Chacabuco
-Picavi/Chacabuco/Pedro Aguirre Cerda
+Paicavi/Chacabuco/Pedro Aguirre Cerda

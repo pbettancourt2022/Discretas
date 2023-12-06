@@ -315,26 +315,24 @@ int main() {
         return EXIT_FAILURE;
     }
     
-    printf("hola %s", paso);
-    
-    //if(paso!=NULL){
-       // int callepaso = obtenerNumeroCalle(paso, calles, NUM_CALLES);
-       // if (callepaso == -1) {
-       //     printf("Nombre de calle no válido paso.\n");
-      //      return EXIT_FAILURE;
-       // }
-       // int verticeDestino= obtenerNumeroVertice(callepaso, numPaso);
-    //}
-    
-    
     // Calcular el vértice correspondiente
     int verticeOrigen = obtenerNumeroVertice(calleorigen, numOrigen);
     int verticeDestino= obtenerNumeroVertice(calledestino, numDestino);
-    
-    //int orige = 111; // Vertice de origen (ajusta según tu necesidad)
-    //int destinos = 0; // Vertice de destino (ajusta según tu necesidad)
 
-    dijkstra(verticeOrigen, verticeDestino);
+    if(paso[0]!=NULL){
+        int callepaso = obtenerNumeroCalle(paso, calles, NUM_CALLES);
+        if (callepaso == -1) {
+            printf("Nombre de calle no valido paso.\n");
+            return EXIT_FAILURE;
+        }
+        int verticePaso= obtenerNumeroVertice(callepaso, numPaso);
+        dijkstra(verticeOrigen, verticePaso);
+        dijkstra(verticePaso, verticeDestino);
+    }
+    else{
+        dijkstra(verticeOrigen, verticeDestino);
+    }
+    
 
     return 0;
 }
