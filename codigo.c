@@ -16,18 +16,17 @@ typedef struct {
 } Interseccion;
 
 typedef struct {
-    int distancia; // Distancia en metros
+    int distancia; 
 } Conexion;
 
-// Estructura para representar una calle con su nombre y número asociado
 typedef struct {
     char nombre[MAX_NOMBRE_CALLE];
     int numero;
 } Calle;
 
-int matriz[V][V]; // Matriz de adyacencia para representar el grafo dirigido
-int distancia[V]; // Almacena la distancia más corta desde el vértice de origen
-int visitado[V]; // Indica si un vértice ha sido visitado o no
+int matriz[V][V];
+int distancia[V]; 
+int visitado[V]; 
 
 // Función para encontrar el vértice con la distancia mínima
 int minDistancia(int distancia[], bool visitado[]) {
@@ -163,7 +162,6 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    // Crear un array de estructuras Calle con nombres y números
     Calle calles[NUM_CALLES];
 
     // Leer los nombres de las calles del archivo y asignar números a las calles
@@ -173,7 +171,7 @@ int main() {
             fclose(archivoCalles);
             return EXIT_FAILURE;
         }
-        calles[i].numero = i; // Asignar el número correspondiente a la calle
+        calles[i].numero = i; 
     }
 
     fclose(archivoCalles);
@@ -189,7 +187,7 @@ int main() {
 
     char linea[100];
     while (fgets(linea, sizeof(linea), archivo) != NULL) {
-        linea[strcspn(linea, "\n")] = 0; // Elimina el carácter de nueva línea
+        linea[strcspn(linea, "\n")] = 0; 
 
         int numero = obtenerNumeroInterseccion(intersecciones, numIntersecciones, linea);
         if (numero == -1) {
@@ -256,7 +254,6 @@ int main() {
         else if (j==83){
             matriz[j][j+14]=1;
         }
-        //-----------
         //Filas 28 56 84 -------
         else if ((j==28)||(j==56)||(j==84)){
             matriz[j][j-14]=1;
@@ -308,6 +305,11 @@ int main() {
     printf("Ingrese lugar de origen y de destino, (es opcional colocar un lugar de paso, en el ejemplo es \"Paicavi 600\") y sus numeros separados por espacios entre comillas (Ejemplo: \"Orompello 100\" \"Rengo 400\" \"Paicavi 600\"): ");
     fgets(entrada, sizeof(entrada), stdin);
     sscanf(entrada, "\"%s %d\" \"%s %d\" \"%s %d\"", origen, &numOrigen, destino, &numDestino, paso, &numPaso);
+    if (strcmp(destino, "Pedro_Aguirre_Cerda") == 0){
+        numDestino=numDestino*10;
+        
+    }
+    
     printf("\n");
     // Obtener el número de la calle basado en el nombre
     int calleorigen = obtenerNumeroCalle(origen, calles, NUM_CALLES);
@@ -332,7 +334,6 @@ int main() {
         dijkstra(intersecciones, verticePaso, verticeDestino);
     }
     else{
-        printf("%d, %d", verticeOrigen, verticeDestino);
         dijkstra(intersecciones, verticeOrigen, verticeDestino);
     }
     
