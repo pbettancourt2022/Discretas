@@ -26,7 +26,7 @@ typedef struct {
     int numero;
 } Calle;
 
-int matriz[V][V]; // Matriz de adyacencia para representar el grafo dirigido
+double matriz[V][V]; // Matriz de adyacencia para representar el grafo dirigido
 int distancia[V]; // Almacena la distancia más corta desde el vértice de origen
 int visitado[V]; // Indica si un vértice ha sido visitado o no
 
@@ -44,17 +44,17 @@ int minDistancia(int distancia[], bool visitado[]) {
 }
 
 // Función para imprimir la ruta más corta desde el vértice de origen hasta el vértice de destino
-void imprimirRuta(int padre[], int destino) {
+void imprimirRuta(Interseccion intersecciones[], int padre[], int destino) {
     if (padre[destino] == -1) {
-        printf("%d ", destino);
+        printf("%s ", intersecciones[destino].nombre);
         return;
     }
-    imprimirRuta(padre, padre[destino]);
-    printf("%d ", destino);
+    imprimirRuta(intersecciones, padre, padre[destino]);
+    printf("%s ", intersecciones[destino].nombre);
 }
 
 // Algoritmo de Dijkstra para encontrar la ruta más corta entre dos vértices
-void dijkstra(int origen, int destino) {
+void dijkstra(Interseccion intersecciones[], int origen, int destino) {
     int distancia[V];
     bool visitado[V];
     int padre[V];
@@ -72,7 +72,7 @@ void dijkstra(int origen, int destino) {
         visitado[u] = true;
 
         for (int v = 0; v < V; v++) {
-            if (!visitado[v] && matriz[u][v] && distancia[u] != INT_MAX &&
+            if (!visitado[v] && matriz[u][v] != 0.0 && distancia[u] != INT_MAX &&
                 distancia[u] + matriz[u][v] < distancia[v]) {
                 distancia[v] = distancia[u] + matriz[u][v];
                 padre[v] = u;
@@ -85,9 +85,10 @@ void dijkstra(int origen, int destino) {
         return;
     }
 
-    printf("Ruta mas corta entre %d y %d: ", origen, destino);
-    imprimirRuta(padre, destino);
-    printf("\nDistancia: %d metros\n", (distancia[destino]*100));
+    printf("Ruta mas corta entre %s y %s: ", intersecciones[origen].nombre, intersecciones[destino].nombre);
+    imprimirRuta(intersecciones, padre, destino);
+
+    printf("\nDistancia: %d metros\n", (distancia[destino] * 100));
 }
 
 int obtenerNumeroInterseccion(Interseccion intersecciones[], int numIntersecciones, char nombre[]) {
@@ -294,6 +295,14 @@ int main() {
         }
     }
 
+    // cambiamos los pesos de los arcos en la diagonal
+    matriz[64][65] = matriz[65][64] = 1.41;
+    matriz[79][80] = matriz[80][79] = 1.41;
+    matriz[94][95] = matriz[95][94] = 1.41;
+    matriz[109][110] = matriz[110][109] = 1.41;
+
+
+
     // Mostrar las intersecciones con sus nombres y números asociados
     for (int i = 0; i < numIntersecciones; i++) {
         printf("%s = %d\n", intersecciones[i].nombre, intersecciones[i].numero);
@@ -326,11 +335,11 @@ int main() {
             return EXIT_FAILURE;
         }
         int verticePaso= obtenerNumeroVertice(callepaso, numPaso);
-        dijkstra(verticeOrigen, verticePaso);
-        dijkstra(verticePaso, verticeDestino);
+        dijkstra(intersecciones, verticeOrigen, verticePaso);
+        dijkstra(intersecciones, verticePaso, verticeDestino);
     }
     else{
-        dijkstra(verticeOrigen, verticeDestino);
+        dijkstra(intersecciones, verticeOrigen, verticeDestino);
     }
     
 
